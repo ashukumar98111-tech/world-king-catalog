@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World King - Wholesale Order Hub</title>
+
+    <script>
+        // Right click block
+        document.addEventListener('contextmenu', event => event.preventDefault()); 
+        
+        // Keyboard shortcuts (Ctrl+C, Ctrl+U, Ctrl+S, Ctrl+I) block
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 73)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -26,17 +40,18 @@
         }
         /* Thickness item styles */
         .thickness-box {
-            background: #0a0a0a; 
-            border: 1px solid #222; 
-            padding: 15px; 
-            border-radius: 6px; 
-            text-align: center; 
-            min-width: 110px; 
-            flex: 1; 
+            background: #0a0a0a;
+            border: 1px solid #222;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            min-width: 110px;
+            flex: 1;
             max-width: 140px;
         }
     </style>
 </head>
+
 <body style="margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100%; background: #000000; box-sizing: border-box;">
 
 <header style="width: 100%; background: #000000; padding: 20px 0 15px 0; border-bottom: 2px solid #f1c40f; text-align: center; font-family: sans-serif; overflow: hidden; position: relative;">
