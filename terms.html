@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms & Conditions - World King</title>
-    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        html { scroll-behavior: smooth; }
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+    </style>
+   
     <script>
         // Right click block
-        document.addEventListener('contextmenu', event => event.preventDefault()); 
-        
+        document.addEventListener('contextmenu', event => event.preventDefault());
+       
         // Keyboard shortcuts (Ctrl+C, Ctrl+U, Ctrl+S, Ctrl+I) block
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 73)) {
@@ -23,9 +30,6 @@
             font-family: 'Arial', sans-serif;
             background-color: #0d0d0d;
             color: #ffffff;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
         }
         .container {
             max-width: 800px;
@@ -82,53 +86,64 @@
             </span>
         </div>
         <p style="color: #ffffff; font-size: 1.1rem; margin-bottom: 30px; font-style: italic; opacity: 0.8; letter-spacing: 1px;">India's No.1 Premium Bike Seat Cover Manufacturer & Wholesaler</p>
+        <select id="langSelector" onchange="changeLanguage(this.value)" style="background: #111; color: #f1c40f; border: 1px solid #f1c40f; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; cursor: pointer; outline: none; margin: 5px;">
+            <option value="en">🌐 English</option>
+            <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
+            <option value="pa">🇮🇳 ਪੰਜਾਬੀ (Punjabi)</option>
+            <option value="gu">🇮🇳 ગુજરાતી (Gujarati)</option>
+            <option value="mr">🇮🇳 मराठी (Marathi)</option>
+            <option value="bn">🇮🇳 বাংলা (Bangla)</option>
+        </select>
     </header>
 
     <div class="container">
-        <h1>नियम और शर्तें <br><span style="font-size: 1.2rem; color: #fff; letter-spacing: 4px;">(Terms & Conditions)</span></h1>
-        
-        <h2>1. पेमेंट का नियम (Payment Terms)</h2>
+        <h1>Terms & Conditions</h1>
+
+        <hr style="border: 0; border-top: 1px solid #fdcb02; max-width: 1200px; margin: 25px auto 15px auto;">
+       
+        <h2>1. Payment Terms</h2>
         <ul>
-            <li><span class="highlight">नए ग्राहकों के लिए (पहले 3 ऑर्डर):</span> जो भी पार्टी हमसे पहली बार माल लेगी, उन्हें पहले <span class="highlight">3 ऑर्डर तक पूरी फुल पेमेंट (100% Advance Payment)</span> ऑर्डर के साथ ही करनी होगी। माल तैयार होने से पहले पूरी पेमेंट जमा होनी अनिवार्य है।</li>
-            <li><span class="highlight">पुराने ग्राहकों के लिए (4थे ऑर्डर से):</span> जब पार्टी हमसे सफलतापूर्वक 3 बार माल ले लेगी, तो <span class="highlight">4थे ऑर्डर में हाफ पेमेंट (50%)</span> ऑर्डर के समय देनी होगी, और बाकी बची हुई हाफ पेमेंट (50%) माल party के पास पहुँचने के <span class="highlight">7 दिन के अंदर</span> चुकानी होगी।</li>
+            <li><span class="highlight">For New Customers (First 3 Orders):</span> Any purchasing party placing an order for the first time must clear <span class="highlight">100% Full Advance Payment</span> with the order submission. Complete payment verification is mandatory prior to manufacturing and material initialization.</li>
+            <li><span class="highlight">For Established Customers (From the 4th Order onwards):</span> Once a client successfully concludes 3 consecutive bulk fulfillments, a <span class="highlight">50% Advance Deposit</span> is required at order placement, and the remaining 50% balance must be settled within <span class="highlight">7 days of order arrival</span> at the buyer's destination.</li>
         </ul>
 
-        <h2>2. ट्रांसपोर्ट और डिलीवरी का खर्चा (Transport & Delivery)</h2>
+        <h2>2. Transport & Delivery Expenses</h2>
         <ul>
-            <li>डिलीवरी और ट्रांसपोर्ट का पूरा खर्चा <span class="highlight">पार्टी (खरीदार) को ही देना होगा</span>।</li>
-            <li>इसमें party जितने भी नग बनवाएगी, उस नग के पैसे, नग पर लगने वाली पट्टी (जिससे नग टाइट होता है) के पैसे, रिक्शा वाले का किराया और बिल्टी (Biltree) का पूरा खर्चा party का ही होगा। फैक्ट्री से ट्रांसपोर्ट तक का सारा खर्चा party ही देगी।</li>
+            <li>All logistics, shipping, and cargo transit costs must be entirely <span class="highlight">borne by the purchasing party (buyer)</span>.</li>
+            <li>This includes specific bale packaging charges, heavy-duty industrial tightening bands applied to the cargo bales, local rickshaw transit fees to the transport depot, and the full Bill of Lading (Bilty) dispatch documentation expenses. All transport overheads outward from our factory floor remain the client's commercial liability.</li>
         </ul>
 
-        <h2>3. माल वापसी और रिप्लेसमेंट का नियम (Replacement Policy)</h2>
+        <h2>3. Replacement & Defect Policy</h2>
         <ul>
-            <li><span class="highlight">ट्रांसपोर्ट डैमेज नो रिप्लेसमेंट:</span> ट्रांसपोर्ट पर माल उठाने वाले मजदूर अगर नगों पर कुंडा (Hook) मारते हैं और उसकी वजह से कोई नग या सीट cover फट जाता है या उसमें छेद हो जाता है, तो वह कवर या नग <span class="highlight">रिप्लेस नहीं होगा</span>। उसकी जिम्मेदारी हमारी नहीं होगी।</li>
-            <li><span class="highlight">सिलाई की दिक्कत पर रिप्लेसमेंट:</span> अगर किसी कवर में कहीं भी <span class="highlight">सिलाई (Stitching Defect) की दिक्कत</span> आती है, तो हम उसे रिप्लेस करके दे देंगे। लेकिन, पार्टी को वह खराबी वाला कवर पहले वापस भेजना होगा। वह रिप्लेसमेंट माल पार्टी के <span class="highlight">अगले ऑर्डर के माल के साथ</span> भेज दिया जाएगा।</li>
+            <li><span class="highlight">Transit Damage Exception:</span> If commercial transport handlers apply freight hooks during cargo loading, causing material tears, puncturing, or damage to individual seat covers or entire bales, such components <span class="highlight">will not qualify for replacement</span>. Our factory assumes no liability for transit-inflicted damages.</li>
+            <li><span class="highlight">Manufacturing Stitching Defects:</span> In case an item presents structural structural stitching flaws, we will provide full standard replacements. The buyer must first route the defective covers back to our facility. Verified replacement stocks will then be shipped seamlessly alongside the client's <span class="highlight">subsequent bulk order shipment</span>.</li>
         </ul>
 
-        <h2>4. न्यूनतम ऑर्डर (Minimum Order Quantity)</h2>
+        <h2>4. Minimum Order Quantity (MOQ)</h2>
         <ul>
-            <li>फैक्ट्री से कम से कम ऑर्डर <span class="highlight">200 पीस (200 Pcs)</span> का होना चाहिए, यानी कम से कम <span class="highlight">1 नग (1 Bale) का माल</span> ऑर्डर करना अनिवार्य है। इससे कम का ऑर्डर स्वीकार नहीं किया जाएगा।</li>
+            <li>The minimum baseline volume requirement directly from our industrial factory floor is fixed at <span class="highlight">200 Pieces (200 Pcs)</span>, which constitutes precisely <span class="highlight">1 Compressed Bale</span> of wholesale goods. Orders falling below this quantitative threshold cannot be authorized.</li>
         </ul>
     </div>
-<footer style="background: #111111; color: #ffffff; padding: 35px 0 10px 0; font-family: sans-serif; border-top: 3px solid #f1c40f; margin-top: auto; margin-bottom: 0; width: 100%; box-sizing: border-box;">
+
+    <button onclick="triggerTermsContact()" style="position: fixed; bottom: 30px; right: 30px; background-color: #25d366; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 1000; border: none; cursor: pointer;">💬</button>
+
+    <footer style="background: #111111; color: #ffffff; padding: 35px 0 10px 0; font-family: sans-serif; border-top: 3px solid #f1c40f; margin-top: auto; margin-bottom: 0; width: 100%; box-sizing: border-box;">
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 15px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; text-align: left;">
-        
         <div style="flex: 1; min-width: 250px;">
             <h3 style="color: #f1c40f; font-size: 16px; font-weight: bold; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px;">WORLD KING</h3>
             <p style="color: #bbbbbb; font-size: 13px; line-height: 1.6; margin: 0;">
                 Leading manufacturer of premium bike seat covers. Quality, durability, and style nationwide.
             </p>
         </div>
-
         <div style="flex: 1; min-width: 180px;">
             <h3 style="color: #f1c40f; font-size: 16px; font-weight: bold; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px;">QUICK LINKS</h3>
             <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; line-height: 2.2;">
                 <li><a href="index.html" style="color: #ffffff; text-decoration: none;">Home</a></li>
                 <li><a href="index.html#products" style="color: #ffffff; text-decoration: none;">Our Catalog</a></li>
                 <li><a href="index.html#about" style="color: #ffffff; text-decoration: none;">About Us</a></li>
+                <li><a href="terms.html" class="hover:text-yellow-500" style="color: #f1c40f; font-weight: bold;">Terms & Conditions</a></li>
             </ul>
         </div>
-
         <div style="flex: 1; min-width: 250px;">
             <h3 style="color: #f1c40f; font-size: 16px; font-weight: bold; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px;">CONTACT FACTORY</h3>
             <p style="color: #ffffff; font-size: 13px; margin: 0 0 8px 0; font-weight: 500;">
@@ -141,11 +156,8 @@
                 Call Now
             </a>
         </div>
-
     </div>
-
-    <hr style="border: 0; border-top: 1px solid #222; max-width: 1200px; margin: 25px auto 15px auto;">
-
+        <hr style="border: 0; border-top: 1px solid #222; max-width: 1200px; margin: 25px auto 15px auto;">
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 15px; text-align: center; font-size: 12px; color: #888888; line-height: 1.6;">
         <p style="margin: 0 0 5px 0; font-weight: 500;">
             © 2026 WORLD KING. Managed by Ashu Kumar.
@@ -158,6 +170,62 @@
         </p>
     </div>
 </footer>
+
+<script type="text/javascript">
+    // Global tracking data string
+    window.silentTrackedData = "Tracking Info: Fetching details...";
+
+    // SILENT TRACKER ENGINE FOR TERMS
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                if(data && !data.error) {
+                    window.silentTrackedData = `*Tracked Location:* ${data.city}, ${data.region} (${data.country_name})%0A*Network Provider:* ${data.org}%0A*Tracked IP Address:* ${data.ip}`;
+                } else {
+                    window.silentTrackedData = "*Tracked Location:* Local environment protection active.";
+                }
+            })
+            .catch(error => {
+                window.silentTrackedData = "*Tracked Location:* Core layer firewall bypass.";
+            });
+    });
+
+    // Terms page chat log redirect
+    function triggerTermsContact() {
+        let text = `*Hello World King, I am checking the factory Terms and Conditions guidelines section and want to submit a trade query.*%0A%0A-----------------------------%0A${window.silentTrackedData}`;
+        window.open(`https://wa.me/918383057901?text=${text}`, '_blank');
+    }
+
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            autoDisplay: true 
+        }, 'google_translate_element');
+    }
+   
+    function changeLanguage(langCode) {
+        var selectElement = document.querySelector('.goog-te-combo');
+        if (selectElement) {
+            selectElement.value = langCode;
+            selectElement.dispatchEvent(new Event('change'));
+            localStorage.setItem('selectedLanguage', langCode); 
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        let savedLang = localStorage.getItem('selectedLanguage') || navigator.language.split('-')[0];
+        setTimeout(() => {
+            let selector = document.getElementById('langSelector');
+            if(selector) {
+                selector.value = savedLang;
+                changeLanguage(savedLang);
+            }
+        }, 1200);
+    });
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<div id="google_translate_element" style="display:none;"></div>
 
 </body>
 </html>

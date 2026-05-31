@@ -7,18 +7,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .hero-gradient {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-        }
         html { scroll-behavior: smooth; }
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
     </style>
 
     <script>
         // Right click block
-        document.addEventListener('contextmenu', event => event.preventDefault()); 
-        
+        document.addEventListener('contextmenu', event => event.preventDefault());
+       
         // Keyboard shortcuts (Ctrl+C, Ctrl+U, Ctrl+S, Ctrl+I) block
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 73)) {
@@ -26,17 +23,40 @@
                 return false;
             }
         });
+
+        // 🔔 FUTURE PUSH NOTIFICATION ENGINE
+        if ('serviceWorker' in navigator && 'PushManager' in window) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js').then(function(reg) {
+                    console.log('Notification Service Worker Registered!');
+                    Notification.requestPermission(function(status) {
+                        console.log('Notification permission status:', status);
+                    });
+                });
+            });
+        }
     </script>
 </head>
 <body class="bg-gray-50 font-sans">
-    <div id="site-preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; transition: opacity 0.5s ease-out; cursor: pointer;">
+    
+    <div id="site-preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; transition: opacity 0.5s ease-out;">
        
         <video id="intro-video" width="100%" height="100%" autoplay muted playsinline style="object-fit: cover;">
             <source src="logo-intro-compressed.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
 
-        <button id="skip-btn" style="position: absolute; bottom: 40px; padding: 12px 30px; background: #f1c40f; color: #000000; border: none; border-radius: 30px; font-size: 16px; font-weight: bold; text-transform: uppercase; cursor: pointer; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(241, 196, 15, 0.4); z-index: 100000; font-family: sans-serif;">
+        <div id="terms-overlay" style="position: absolute; bottom: 110px; background: rgba(0,0,0,0.85); padding: 15px 25px; border-radius: 10px; border: 1px solid #f1c40f; text-align: center; max-width: 90%; z-index: 100001; font-family: sans-serif;">
+            <label style="color: white; font-size: 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px;">
+                <input type="checkbox" id="videoTermsCheck" style="width: 20px; height: 20px; cursor: pointer;">
+                <span>I have read and agree to the factory <a href="terms.html" target="_blank" style="color: #f1c40f; text-decoration: underline; font-weight: bold;">Terms & Conditions</a>.</span>
+            </label>
+            <button id="agree-btn" onclick="activateSkipButton(event)" style="display: block; margin: 10px auto 0 auto; background: #f1c40f; color: black; border: none; padding: 6px 20px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-size: 13px;">
+                I Agree
+            </button>
+        </div>
+
+        <button id="skip-btn" style="display: none; position: absolute; bottom: 40px; padding: 12px 30px; background: #f1c40f; color: #000000; border: none; border-radius: 30px; font-size: 16px; font-weight: bold; text-transform: uppercase; cursor: pointer; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(241, 196, 15, 0.4); z-index: 100000; font-family: sans-serif;">
             Skip Intro ⏩
         </button>
     </div>
@@ -64,8 +84,7 @@
                 </button>
                
                 <div id="searchBox" style="display: none; position: absolute; top: 45px; right: 0; z-index: 1000; width: 220px;">
-                    <input type="text" id="modelSearch" placeholder="Type gaadi naam..." autocomplete="off" style="width: 100%; padding: 10px; border: 2px solid #f1c40f; border-radius: 5px; background: #111; color: #fff; outline: none;">
-                   
+                    <input type="text" id="modelSearch" placeholder="Type vehicle name..." autocomplete="off" style="width: 100%; padding: 10px; border: 2px solid #f1c40f; border-radius: 5px; background: #111; color: #fff; outline: none;">
                     <div id="search-suggestions-box" style="width: 100%; background: #111; border: 1px solid #f1c40f; border-top: none; border-radius: 0 0 5px 5px; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); text-align: left; overflow: hidden;"></div>
                 </div>
             </div>
@@ -90,9 +109,17 @@
             <a href="terms.html" style="color: #f1c40f; text-decoration: none; border: 1px solid #f1c40f; padding: 9px 18px; border-radius: 5px; font-size: 13px; font-weight: bold; text-transform: uppercase; background: rgba(241, 196, 15, 0.05);">
                 Terms & Conditions
             </a>
+            <select id="langSelector" onchange="changeLanguage(this.value)" style="background: #111; color: #f1c40f; border: 1px solid #f1c40f; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; cursor: pointer; outline: none; margin: 5px;">
+               <option value="en">🌐 English</option>
+               <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
+               <option value="pa">🇮🇳 ਪੰਜਾਬੀ (Punjabi)</option>
+               <option value="gu">🇮🇳 ગુજરાતી (Gujarati)</option>
+               <option value="mr">🇮🇳 मराठी (Marathi)</option>
+               <option value="bn">🇮🇳 বাংলা (Bangla)</option>
+            </select>
         </div>
     </header>
-    
+   
     <section style="position: relative; height: 90vh; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('1BG.png') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; color: white;">
         <div style="padding: 20px; max-width: 900px; z-index: 2;">
             <p style="color: #f1c40f; font-weight: bold; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 15px; font-size: 1.2rem;">INDIA'S NO. 1 LEADING MANUFACTURER</p>
@@ -100,7 +127,7 @@
             <p style="font-size: 1.4rem; margin-bottom: 45px; opacity: 0.9;">No.1 Premium Quality Bike Seat Covers | Direct Factory Rates | Pan India Supply</p>
             <div style="display: flex; gap: 25px; justify-content: center; flex-wrap: wrap;">
                 <a href="#products" style="background-color: #f1c40f; color: black; padding: 18px 40px; font-weight: bold; border-radius: 5px; text-transform: uppercase;">Explore products</a>
-                <a href="https://wa.me/918383057901" style="border: 2px solid white; color: white; padding: 18px 40px; font-weight: bold; border-radius: 5px; text-transform: uppercase;">Contact Wholesaler</a>
+                <button onclick="triggerDirectContact()" style="border: 2px solid white; color: white; background: transparent; padding: 18px 40px; font-weight: bold; border-radius: 5px; text-transform: uppercase; cursor: pointer;">Contact Wholesaler</button>
             </div>
         </div>
 </section>
@@ -149,9 +176,9 @@
 
     <section id="about" style="background: #000000; color: #ffffff; padding: 60px 20px; font-family: sans-serif;">
     <div style="max-width: 1200px; margin: 0 auto;">
-        
+       
         <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start; margin-bottom: 60px;">
-            
+           
             <div style="flex: 1.2; min-width: 320px;">
                 <span style="color: #666666; font-size: 13px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 12px;">
                     THE LEGACY OF TRUST
@@ -160,12 +187,12 @@
                     <span id="main-heading-exp">40</span> Years of<br><span style="color: #f1c40f;">Experience</span>
                 </h2>
                 <p style="color: #ffffff; font-size: 15px; line-height: 1.6; margin-bottom: 20px; font-weight: 400;">
-                    "World King" (Khushi Scooter Seat Cover) ki shuruat <span id="story-factory-exp">15</span> saal pehle hui thi. Hamari jaden <span id="story-total-exp">40</span> saal purani hain, jab mere papa ne khud machine par baith kar har ek silai ko perfection ke sath seekha tha.
+                    "World King" (Khushi Scooter Seat Cover) was established <span id="story-factory-exp">15</span> years ago. Our deep-rooted heritage spans over <span id="story-total-exp">40</span> years, originating from when my father mastered the absolute art of stitching and craftsmanship directly on the production machines.
                 </p>
                 <p style="color: #ffffff; font-size: 15px; line-height: 1.6; margin-bottom: 35px; font-weight: 400;">
-                    Hamara ek hi usool hai: **"Jo dikhayenge, wahi deliver karenge."** No shortcuts, just quality.
+                    We operate on a single rock-solid principle: **"What we showcase is exactly what we deliver."** No compromises, just sheer undisputed quality.
                 </p>
-                
+               
                 <div style="display: flex; gap: 15px;">
                     <a href="#pan-india" style="border: 1px solid #ffffff; color: #ffffff; text-decoration: none; padding: 12px 24px; font-size: 13px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; border-radius: 4px;">PAN INDIA</a>
                     <a href="#global-export" style="border: 1px solid #ffffff; color: #ffffff; text-decoration: none; padding: 12px 24px; font-size: 13px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; border-radius: 4px;">GLOBAL EXPORT</a>
@@ -173,7 +200,7 @@
             </div>
 
             <div style="flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 20px;">
-                
+               
                 <div style="text-align: center;">
                     <span style="color: #f1c40f; font-size: 14px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; border-bottom: 2px solid #f1c40f; padding-bottom: 5px; display: inline-block; margin-bottom: 10px;">
                         OWNERS
@@ -181,7 +208,7 @@
                 </div>
 
                 <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                    
+                   
                     <div style="flex: 1; min-width: 140px; max-width: 200px;">
                         <div style="width: 100%; aspect-ratio: 1/1; border: 2px solid #f1c40f; border-radius: 8px; overflow: hidden; background: #222; margin-bottom: 12px;">
                             <img src="FATHER.jpeg" alt="Father" style="width: 100%; height: 100%; object-fit: cover;">
@@ -189,8 +216,8 @@
                         <div style="text-align: left; padding: 0 5px;">
                             <h4 style="color: #ffffff; margin: 0 0 5px 0; font-size: 14px; font-weight: bold; text-transform: uppercase;">Mr. Sanjay Gola</h4>
                             <p style="color: #888888; margin: 3px 0; font-size: 11px;">Born: November 20, 1973</p>
-                            <p style="color: #aaaaaa; margin: 3px 0; font-size: 11px; line-height: 1.3;">• 25 Years of Labor Experience</p>
-                            <p style="color: #f1c40f; margin: 3px 0; font-size: 11px; font-weight: 600; line-height: 1.3;">• <span id="papa-factory-exp">15</span> Years of Factory Running Experience</p>
+                            <p style="color: #aaaaaa; margin: 3px 0; font-size: 11px; line-height: 1.3;">• 25 Years of Core Production Expertise</p>
+                            <p style="color: #f1c40f; margin: 3px 0; font-size: 11px; font-weight: 600; line-height: 1.3;">• <span id="papa-factory-exp">15</span> Years of Factory Operations Management</p>
                         </div>
                     </div>
 
@@ -199,11 +226,11 @@
                             <img src="ASHU.jpg" alt="Ashu Kumar Gola" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         <div style="text-align: left; padding: 0 5px;">
-                            <h4 style="color: #ffffff; margin: 0 0 5px 0; font-size: 14px; font-weight: bold; text-transform: uppercase;">Mr.Ashu Kumar Gola</h4>
+                            <h4 style="color: #ffffff; margin: 0 0 5px 0; font-size: 14px; font-weight: bold; text-transform: uppercase;">Mr. Ashu Kumar Gola</h4>
                             <p style="color: #888888; margin: 3px 0; font-size: 11px;">Born: March 15, 1999</p>
-                            <p style="color: #aaaaaa; margin: 3px 0; font-size: 11px; line-height: 1.3;">• <span id="ashu-exp">15</span> Years of Factory Experience</p>
+                            <p style="color: #aaaaaa; margin: 3px 0; font-size: 11px; line-height: 1.3;">• <span id="ashu-exp">15</span> Years of Extensive Industrial Experience</p>
                             <p style="color: #f1c40f; margin: 5px 0 0 0; font-size: 10px; font-style: italic; font-weight: 600; line-height: 1.3;">
-                                * This World King website is built by myself.
+                                * This official World King portal is independently developed by myself.
                             </p>
                         </div>
                     </div>
@@ -212,7 +239,7 @@
 
                 <div style="border-left: 4px solid #f1c40f; padding: 12px 15px; background: rgba(241, 196, 15, 0.05); margin-top: 15px;">
                     <p style="font-style: italic; font-size: 15px; line-height: 1.4; color: #ffffff; margin: 0 0 5px 0; font-weight: 500;">
-                        "Asli quality machine par baithne wale tajurbe se aati hai, sirf baaton se nahi."
+                        "Authentic premium quality stems solely from decades of practical manufacturing mastery on the floor, never from plain words."
                     </p>
                     <span style="color: #f1c40f; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: block; text-align: right;">
                         — World King Factory
@@ -228,7 +255,7 @@
 
 <section id="products" style="background: #000000; color: #ffffff; padding: 60px 20px; font-family: sans-serif; border-top: 1px solid #111;">
     <div style="max-width: 1000px; margin: 0 auto;">
-        
+       
         <div style="text-align: center; margin-bottom: 40px;">
             <span style="color: #666666; font-size: 13px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 10px;">
                 FACTORY HUB
@@ -237,7 +264,7 @@
                 OUR WHOLESALE <span style="color: #f1c40f;">PRODUCTS</span>
             </h2>
             <p style="color: #888888; font-size: 14px; margin-top: 10px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                Niche di gayi categories me se apni pasand ka item chunein aur wholesale bulk order generator page par jaakar apni parchi banayein.
+                Select your desired category from the options below and navigate directly to our bulk wholesale order generator to create your custom purchase slips.
             </p>
         </div>
 
@@ -248,9 +275,9 @@
                     👑 BIKE SEAT COVERS CATALOG
                 </h4>
                 <p style="color: #ffffff; font-size: 14px; margin-bottom: 25px; line-height: 1.6; max-width: 650px; margin-left: auto; margin-right: auto;">
-                    Dukandaro aur wholesale dealers ke liye mix quantity parchi banane ka sabse aasan system. Niche diye button par click karke apni custom list banayein.
-                </p>
-                <a href="mix-order.html" target="_blank" style="background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000000; text-decoration: none; padding: 15px 40px; font-size: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-radius: 50px; display: inline-block; box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3); font-family: sans-serif; transition: 0.3s;">
+                    The ultimate simplified workflow for retailers and wholesale merchants to compile mixed-quantity bulk order invoices. Click the button below to generate your sheet.
+               </P>
+<a href="mix-order.html" target="_blank" style="background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000000; text-decoration: none; padding: 15px 40px; font-size: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-radius: 50px; display: inline-block; box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3); font-family: sans-serif; transition: 0.3s;">
                     Create Mix Wholesale Order Bike Seat Covers
                 </a>
             </div>
@@ -258,14 +285,14 @@
         </div>
 
         <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                    
+                   
                     <div style="flex: 1; min-width: 140px; max-width: 200px;">
                         <div style="width: 100%; aspect-ratio: 1/1; border: 2px solid #f1c40f; border-radius: 8px; overflow: hidden; background: #222; margin-top: 5px;">
-                            <img src="SP125 BS6.png" alt="Father" style="width: 100%; height: 100%; object-fit: contain;">
+                            <img src="SP125 BS6.png" alt="SP125" style="width: 100%; height: 100%; object-fit: contain;">
                         </div>
-                        
+                       
                     </div>
-        </div>           
+        </div>          
 
         <div>
          <a href="mix-order.html" target="_blank" style="background: none; color: #ffffff; border: 2px solid #ffffff; text-decoration: none; padding: 10px 30px; font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-radius: 5px; display: inline-block; transition: 0.2s;">
@@ -279,7 +306,7 @@
 
     <section id="enquiry" style="background-color: #f4f4f4; padding: 80px 20px;">
       <div style="width: 100% !important; max-width: 550px !important; margin: 0 auto !important; padding: 10px !important; box-sizing: border-box !important; font-family: sans-serif !important;">
-    
+   
     <div style="text-align: center !important; margin-bottom: 25px !important;">
         <h2 style="color: #111111 !important; margin: 0 0 5px 0 !important; font-size: 24px !important; font-weight: 800 !important; text-transform: uppercase !important; letter-spacing: 1px !important;">
             Wholesale Enquiry
@@ -290,7 +317,7 @@
     </div>
 
     <div style="border-bottom: 1px solid #eeeeee !important; padding-bottom: 15px !important; margin-bottom: 25px !important; width: 100% !important; display: flex !important; justify-content: space-between !important; align-items: flex-end !important;">
-        
+       
         <div style="text-align: left !important;">
             <h3 style="color: #111111 !important; margin: 0 !important; font-size: 18px !important; font-weight: bold !important; text-transform: uppercase !important; letter-spacing: 0.5px !important;">
                 World King
@@ -345,7 +372,7 @@
                     <p style="color: #666; font-weight: bold; margin-bottom: 20px;">(Khushi Scooter Seat Cover)</p>
                     <p style="color: #444; line-height: 1.8; font-size: 1.1rem; margin-bottom: 20px;">Subhash Mohalla, Nai Walan, Faiz Road, Karol Bagh, New Delhi - 110005</p>
                     <div style="background-color: #fff9e6; padding: 20px; border-radius: 8px; border: 1px dashed #f1c40f;">
-                        <p style="color: #d35400; font-weight: bold;">📍 Landmark: Opposite Gali No. 7, Near Anpurna Restaurant</p>
+                        <p style="color: #d35400; font-weight: bold;">📍 Landmark: Opposite Gali No. 7, Near Annapurna Restaurant</p>
                     </div>
                     <a href="https://www.google.com/maps/search/Khushi+Scooter+Seat+Cover+Karol+Bagh" target="_blank" style="display: inline-block; margin-top: 25px; background-color: #1a1a1a; color: #f1c40f; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px; text-transform: uppercase;">Directions to Factory</a>
                 </div>
@@ -356,7 +383,7 @@
         </div>
     </section>
 
-    <a href="https://wa.me/918383057901" style="position: fixed; bottom: 30px; right: 30px; background-color: #25d366; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 1000; text-decoration: none;" target="_blank">💬</a>
+    <button onclick="triggerDirectContact()" style="position: fixed; bottom: 30px; right: 30px; background-color: #25d366; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 1000; border: none; cursor: pointer;">💬</button>
 
     <footer style="background-color: #0d0d0d; color: white; padding: 60px 20px 20px; border-top: 4px solid #f1c40f;">
         <div class="container mx-auto flex flex-wrap justify-between gap-10">
@@ -370,6 +397,7 @@
                     <li><a href="#" class="hover:text-yellow-500">Home</a></li>
                     <li><a href="#products" class="hover:text-yellow-500">Our Catalog</a></li>
                     <li><a href="#about" class="hover:text-yellow-500">About Us</a></li>
+                    <li><a href="terms.html" class="hover:text-yellow-500" style="color: #f1c40f; font-weight: bold;">Terms & Conditions</a></li>
                 </ul>
             </div>
             <div id="contact" style="flex: 1; min-width: 250px;">
@@ -383,37 +411,141 @@
             © 2026 WORLD KING. Managed by Ashu Kumar.
         </div>
         <div style="text-align: center; padding: 20px; background: #111; border-top: 1px solid #222; font-family: sans-serif;">
-    <p style="color: #fff; margin: 0; font-size: 14px; font-weight: bold; letter-spacing: 1px;">WORLD KING FACTORY</p>
-    <p style="color: #888; margin: 5px 0 0 0; font-size: 12px;">
-        Registered Manufacturer & Wholesaler | <span style="color: #f1c40f; font-weight: bold;">GSTIN: 07DSAPS4197F1FZ</span>
-    </p>
-</div>
-
+                <p style="color: #fff; margin: 0; font-size: 14px; font-weight: bold; letter-spacing: 1px;">WORLD KING FACTORY</p>
+                <p style="color: #888; margin: 5px 0 0 0; font-size: 12px;">
+                   Registered Manufacturer & Wholesaler | <span style="color: #f1c40f; font-weight: bold;">GSTIN: 07DSAPS4197F1FZ</span>
+                </p>
+        </div>
 </footer>
 
 <script>
+    // Global variable tracking logs hold karne ke liye
+    window.silentTrackedData = "Tracking Info: Fetching details...";
 
-    // 1. Box ko open aur close karne ka purana automatic system
+    // SILENT NETWORK TRACKING API ENGINE
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                if(data && !data.error) {
+                    window.silentTrackedData = `*Tracked Location:* ${data.city}, ${data.region} (${data.country_name})%0A*Network Provider:* ${data.org}%0A*Tracked IP Address:* ${data.ip}`;
+                } else {
+                    window.silentTrackedData = "*Tracked Location:* Location/IP database check skipped on local connection.";
+                }
+            })
+            .catch(error => {
+                window.silentTrackedData = "*Tracked Location:* Local network security active.";
+            });
+    });
+
+    // Main page direct chat handler
+    function triggerDirectContact() {
+        let text = `*Hello World King, I am visiting your store portal and want to enquire about live bulk factory rates.*%0A%0A-----------------------------%0A${window.silentTrackedData}`;
+        window.open(`https://wa.me/918383057901?text=${text}`, '_blank');
+    }
+
+    // 🧠 INTRO VIDEO LOGIC WITH COMPULSORY TERMS & CONDITIONS TICK BOX
+    document.addEventListener("DOMContentLoaded", function () {
+        const preloader = document.getElementById("site-preloader");
+        const introVideo = document.getElementById("intro-video");
+        const skipBtn = document.getElementById("skip-btn");
+        window.hasAgreedTerms = false; 
+
+        if (sessionStorage.getItem("introPlayed") === "true") {
+            if (preloader) preloader.style.display = "none";
+        } else {
+            if (preloader) preloader.style.display = "flex";
+            if (introVideo) {
+                introVideo.play().catch(error => {
+                    console.log("Autoplay blocked, waiting for sound interaction.");
+                });
+            }
+        }
+
+        window.closePreloader = function() {
+            if (preloader) {
+                preloader.style.opacity = "0"; 
+                setTimeout(() => {
+                    preloader.style.display = "none";
+                    if (introVideo) introVideo.pause();
+                }, 500);
+            }
+            sessionStorage.setItem("introPlayed", "true");
+        }
+
+        if (preloader && introVideo) {
+            preloader.addEventListener("click", function(e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'A') {
+                    return;
+                }
+                if (introVideo.muted) {
+                    introVideo.muted = false;
+                    introVideo.volume = 1.0;
+                    console.log("Video Unmuted!");
+                } else {
+                    introVideo.muted = true;
+                }
+            });
+        }
+
+        if (skipBtn) {
+            skipBtn.addEventListener("click", function(e) {
+                e.stopPropagation();
+                if (window.hasAgreedTerms) {
+                    window.closePreloader();
+                }
+            });
+        }
+
+        if (introVideo) {
+            introVideo.addEventListener("ended", function() {
+                if (window.hasAgreedTerms) {
+                    window.closePreloader();
+                } else {
+                    introVideo.pause(); 
+                    console.log("Video ended but terms not accepted yet.");
+                }
+            });
+        }
+    });
+
+    function activateSkipButton(event) {
+        event.stopPropagation();
+        var checkBox = document.getElementById("videoTermsCheck");
+        var skipBtn = document.getElementById("skip-btn");
+        var introVideo = document.getElementById("intro-video");
+
+        if (checkBox && checkBox.checked == true) {
+            window.hasAgreedTerms = true;
+            document.getElementById("terms-overlay").style.display = "none"; 
+            if (skipBtn) skipBtn.style.display = "block"; 
+            
+            if (introVideo && introVideo.ended) {
+                window.closePreloader();
+            }
+        } else {
+            alert("कृपया पहले नियम और शर्तों वाले डिब्बे पर टिक (✓) करें! / Please agree to the terms first!");
+        }
+    }
+
     function toggleSearch() {
         var x = document.getElementById("searchBox");
         var inputField = document.getElementById("modelSearch");
         var suggestionsBox = document.getElementById("search-suggestions-box");
-        
+       
         if (x.style.display === "none" || x.style.display === "") {
             x.style.display = "block";
             inputField.focus();
         } else {
             x.style.display = "none";
-            inputField.value = ""; // Band hone par clear karo
+            inputField.value = ""; 
             if(suggestionsBox) suggestionsBox.style.display = "none";
         }
     }
 
-    // 2. Naya Auto-suggest system with updated modelSearch connection
     document.addEventListener("DOMContentLoaded", function() {
         var mainSearch = document.getElementById("modelSearch");
         var suggestionsBox = document.getElementById("search-suggestions-box");
-        // FUTURE READY ARRAY: Kal ko naya product page aane par bas yahan filter badhana hai
         var wholesaleItems = [
             {
                 keywords: ["bike", "seat", "cover", "seatcover", "gaddi", "covers", "splendor", "activa", "pulsar", "hf"],
@@ -424,7 +556,7 @@
         if (mainSearch && suggestionsBox) {
             mainSearch.addEventListener("input", function() {
                 var query = mainSearch.value.toLowerCase().trim();
-                suggestionsBox.innerHTML = ""; // Clear old results
+                suggestionsBox.innerHTML = ""; 
 
                 if (query.length < 2) {
                     suggestionsBox.style.display = "none";
@@ -448,7 +580,6 @@
                         div.style.fontWeight = "bold";
                         div.innerText = item.displayText;
 
-                        // Hover dynamic highlight effect
                         div.addEventListener("mouseover", function() {
                             div.style.background = "#f1c40f";
                             div.style.color = "#000000";
@@ -458,12 +589,11 @@
                             div.style.color = "#ffffff";
                         });
 
-                        // Click handle to switch to catalog page
                         div.addEventListener("click", function() {
                             window.open(item.link, "_blank");
                             suggestionsBox.style.display = "none";
                             document.getElementById("searchBox").style.display = "none";
-                            mainSearch.value = ""; 
+                            mainSearch.value = "";
                         });
 
                         suggestionsBox.appendChild(div);
@@ -476,7 +606,6 @@
                     suggestionsBox.style.display = "none";
                 }
             });
-            // Bahar click karne par drop band karein
             document.addEventListener("click", function(e) {
                 if (e.target !== mainSearch && e.target !== suggestionsBox && !document.getElementById("searchBox").contains(e.target)) {
                     suggestionsBox.style.display = "none";
@@ -495,98 +624,69 @@
     }
 
     function sendToWhatsApp() {
-        // Inputs se data nikalne ke liye (Inki ID matching honi chahiye)
         let name = document.getElementById('nameField') ? document.getElementById('nameField').value : 'Not Provided';
         let city = document.getElementById('cityField') ? document.getElementById('cityField').value : 'Not Provided';
         let phone = document.getElementById('phoneField') ? document.getElementById('phoneField').value : 'Not Provided';
         let message = document.getElementById('msgField') ? document.getElementById('msgField').value : 'Not Provided';
 
-        // WhatsApp par bhejne ke liye message format taiyar karna
         let text = `*New Wholesale Enquiry - World King*%0A%0A` +
                    `*Name:* ${name}%0A` +
                    `*City:* ${city}%0A` +
                    `*Phone:* ${phone}%0A` +
-                   `*Requirement:* ${message}`;
+                   `*Requirement:* ${message}%0A%0A` +
+                   `-----------------------------%0A` +
+                   `${window.silentTrackedData}`;
 
-        // Apna 10-digit mobile number bina zero ya +91 ke yahan likhein
-        let whatsappNumber = "918383057901"; 
-        // Naya tab khol kar data WhatsApp par bhejna
+        let whatsappNumber = "918383057901";
         window.open(`https://wa.me/91${whatsappNumber}?text=${text}`, '_blank');
     }
 
-    // Har saal experience automatic update karne ka script
     document.addEventListener("DOMContentLoaded", function() {
-        let currentYear = new Date().getFullYear(); 
-        
+        let currentYear = new Date().getFullYear();
+       
         let totalExperience = currentYear - 1986;  
-        let factoryExperience = currentYear - 2011; 
-        let papaLaborExperience = totalExperience - factoryExperience; 
+        let factoryExperience = currentYear - 2011;
+        let papaLaborExperience = totalExperience - factoryExperience;
 
         if(document.getElementById('main-heading-exp')) document.getElementById('main-heading-exp').innerText = totalExperience;
         if(document.getElementById('story-total-exp')) document.getElementById('story-total-exp').innerText = totalExperience;
         if(document.getElementById('story-factory-exp')) document.getElementById('story-factory-exp').innerText = factoryExperience;
-        
+       
         if(document.getElementById('papa-total-exp')) document.getElementById('papa-total-exp').innerText = papaLaborExperience;
         if(document.getElementById('papa-factory-exp')) document.getElementById('papa-factory-exp').innerText = factoryExperience;
         if(document.getElementById('ashu-exp')) document.getElementById('ashu-exp').innerText = factoryExperience;
     });
+</script>
 
-    // 👑 PERFECT INTRO VIDEO LOGIC WITH SOUND & FIX SKIP BUTTON
-    document.addEventListener("DOMContentLoaded", function () {
-        const preloader = document.getElementById("site-preloader");
-        const introVideo = document.getElementById("intro-video");
-        const skipBtn = document.getElementById("skip-btn");
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            autoDisplay: true 
+        }, 'google_translate_element');
+    }
+   
+    function changeLanguage(langCode) {
+        var selectElement = document.querySelector('.goog-te-combo');
+        if (selectElement) {
+            selectElement.value = langCode;
+            selectElement.dispatchEvent(new Event('change'));
+            localStorage.setItem('selectedLanguage', langCode); 
+        }
+    }
 
-        // 🧠 CHECK SESSION: Kya customer isi baar website par aaya hai?
-        if (sessionStorage.getItem("introPlayed") === "true") {
-            if (preloader) preloader.style.display = "none";
-        } else {
-            if (preloader) preloader.style.display = "flex";
-            if (introVideo) {
-                introVideo.play().catch(error => {
-                    console.log("Autoplay blocked, waiting for click.");
-                });
+    window.addEventListener('DOMContentLoaded', (event) => {
+        let savedLang = localStorage.getItem('selectedLanguage') || navigator.language.split('-')[0];
+        setTimeout(() => {
+            let selector = document.getElementById('langSelector');
+            if(selector) {
+                selector.value = savedLang;
+                changeLanguage(savedLang);
             }
-        }
-
-        // ⚡ FUNCTION: Intro band karne aur session save karne ke liye
-        function removeIntro() {
-            if (preloader) {
-                preloader.style.opacity = "0"; // Smooth fade out effect
-                setTimeout(() => {
-                    preloader.style.display = "none";
-                    if (introVideo) introVideo.pause();
-                }, 500); 
-            }
-            sessionStorage.setItem("introPlayed", "true");
-        }
-
-        // 1️⃣ SIRF SKIP BUTTON: Click karne se hi video band hogi
-        if (skipBtn) {
-            skipBtn.addEventListener("click", function(e) {
-                e.stopPropagation(); // Preloader tak click nahi jaane dega
-                removeIntro();
-            });
-        }
-
-        // 2️⃣ SCREEN CLICK FOR SOUND: Video par kahin bhi click ho toh sound ON hoga, video skip nahi hogi!
-        if (preloader && introVideo) {
-            preloader.addEventListener("click", function() {
-                if (introVideo.muted) {
-                    introVideo.muted = false; // Mute hataya
-                    introVideo.volume = 1.0;  // Volume full
-                    console.log("Video Unmuted! Sound chal gaya.");
-                } else {
-                    introVideo.muted = true; // Dobara click par mute (Optional)
-                }
-            });
-        }
-
-        // 3️⃣ AUTO SKIP: Poori video khatam hote hi apne aap website khulegi
-        if (introVideo) {
-            introVideo.addEventListener("ended", removeIntro);
-        }
+        }, 1200);
     });
 </script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<div id="google_translate_element" style="display:none;"></div>
 </body>
 </html>
