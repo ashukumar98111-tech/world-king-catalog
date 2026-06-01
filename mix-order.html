@@ -222,44 +222,74 @@
             </p>
         </div>
 
-        <div id="catalog-section" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: flex-end; background: #0a0a0a; border: 1px solid #222; padding: 20px; border-radius: 10px; margin-bottom: 35px;">
-            <div style="text-align: left; min-width: 240px; flex: 1; max-width: 320px;">
-                <label style="color: #888; font-size: 11px; font-weight: bold; display: block; margin-bottom: 6px; text-transform: uppercase;">1. Choose Fabric Design (Optional):</label>
-                <select id="fabric-design-select" style="background: #111; color: #ffffff; border: 1px solid #333; padding: 11px 15px; font-size: 14px; font-weight: bold; border-radius: 6px; outline: none; cursor: pointer; width: 100%;">
-                    <option value="none" selected>None (Optional)</option>
-                    <option value="dull">Fabric Dull</option>
-                    <option value="shine">Fabric Shine</option>
-                </select>
+        <div id="catalog-section" style="background: #0a0a0a; border: 1px solid #222; padding: 25px; border-radius: 10px; margin-bottom: 35px; display: flex; flex-direction: column; gap: 25px;">
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; align-items: flex-end;">
+                
+                <div style="text-align: left; min-width: 190px; flex: 1;">
+                    <label style="color: #888; font-size: 11px; font-weight: bold; display: block; margin-bottom: 6px; text-transform: uppercase;">1. Choose Fabric Design (Optional):</label>
+                    <select id="fabric-design-select" style="background: #111; color: #ffffff; border: 1px solid #333; padding: 11px 12px; font-size: 13px; font-weight: bold; border-radius: 6px; outline: none; cursor: pointer; width: 100%;">
+                        <option value="none" selected>None (Optional)</option>
+                        <option value="Fabric Dull">Fabric Dull</option>
+                        <option value="Fabric Shine">Fabric Shine</option>
+                    </select>
+                </div>
+
+                <div style="text-align: left; min-width: 190px; flex: 1;">
+                    <label style="color: #888; font-size: 11px; font-weight: bold; display: block; margin-bottom: 6px; text-transform: uppercase;">2. Choose Fabric Quality (Optional):</label>
+                    <select id="final-thickness-select" style="background: #111; color: #f1c40f; border: 2px solid #f1c40f; padding: 11px 12px; font-size: 13px; font-weight: bold; border-radius: 6px; outline: none; cursor: pointer; width: 100%;">
+                        <option value="none" selected>None (Optional)</option>
+                        <option value="90mm">90mm (Standard Light Grade)</option>
+                        <option value="90+mm">90+ mm</option>
+                        <option value="1.10mm">1.10mm</option>
+                        <option value="1.20mm">1.20mm (Standard Quality)</option>
+                        <option value="1.30mm">1.30mm</option>
+                        <option value="1.40mm">1.40mm</option>
+                        <option value="1.50mm">1.50mm</option>
+                        <option value="1.60mm">1.60mm</option>
+                        <option value="1.70mm">1.70mm</option>
+                        <option value="1.80mm">1.80mm</option>
+                        <option value="2.00mm">2.00mm (Premium Maximum Heavy Gauge)</option>
+                    </select>
+                </div>
+
+                <div style="text-align: left; min-width: 190px; flex: 1;">
+                    <label style="color: #888; font-size: 11px; font-weight: bold; display: block; margin-bottom: 6px; text-transform: uppercase;">3. Choose Daai (Optional):</label>
+                    <select id="die-select" style="background: #111; color: #ffffff; border: 1px solid #333; padding: 11px 12px; font-size: 13px; font-weight: bold; border-radius: 6px; outline: none; cursor: pointer; width: 100%;">
+                        <option value="none" selected>None (Optional)</option>
+                        <option value="With Daai">With Daai</option>
+                        <option value="Without Daai">Without Daai</option>
+                    </select>
+                </div>
+
+                <div style="text-align: left; min-width: 190px; flex: 1;">
+                    <label style="color: #888; font-size: 11px; font-weight: bold; display: block; margin-bottom: 6px; text-transform: uppercase;">4. Choose Print Type (Optional):</label>
+                    <select id="print-select" style="background: #111; color: #ffffff; border: 1px solid #333; padding: 11px 12px; font-size: 13px; font-weight: bold; border-radius: 6px; outline: none; cursor: pointer; width: 100%;">
+                        <option value="none" selected>None (Optional)</option>
+                        <option value="Top Single Side Print - Vehicle Name (Right Side)">Top Single Side Print - Vehicle Name (Right Side)</option>
+                        <option value="Top Single Side Print - Vehicle Name (Left Side)">Top Single Side Print - Vehicle Name (Left Side)</option>
+                        <option value="Rear Strap Only Print - Vehicle Name">Rear Strap Only Print - Vehicle Name</option>
+                        <option value="Top Double Side Print - Vehicle Name">Top Double Side Print - Vehicle Name</option>
+                        <option value="Top Double Side & Rear Strap Print - Vehicle Name">Top Double Side & Rear Strap Print - Vehicle Name</option>
+                        <option value="Top Double Side Print (Vehicle Name) & Rear Strap Print (Shop/Party Name)">Top Double Side Print (Vehicle Name) & Rear Strap Print (Shop/Party Name)</option>
+                        <option value="Top Split Print - Vehicle Name (One Side) & Shop/Party Name (Other Side)">Top Split Print - Vehicle Name (One Side) & Shop/Party Name (Other Side)</option>
+                        <option value="No Top Print - Rear Strap Only Print (Shop/Party Name)">No Top Print - Rear Strap Only Print (Shop/Party Name)</option>
+                    </select>
+                </div>
+
+                <div style="text-align: left; min-width: 190px; flex: 1.2;">
+                    <label style="color: #888; font-size: 11px; font-weight: bold; display: block; margin-bottom: 6px; text-transform: uppercase;">5. Search Vehicle Model:</label>
+                    <input type="text" id="catalog-search-bar" placeholder="🔍 Type vehicle model name (e.g. Splendor)..." style="background: #111; color: #ffffff; border: 1px solid #333; padding: 11px 15px; font-size: 13px; border-radius: 6px; outline: none; width: 100%;">
+                </div>
+
             </div>
 
-            <div style="text-align: left; min-width: 240px; flex: 1; max-width: 320px;">
-                <label style="color: #888; font-size: 11px; font-weight: bold; display: block; margin-bottom: 6px; text-transform: uppercase;">2. Choose Fabric Quality (Optional):</label>
-                <select id="final-thickness-select" style="background: #111; color: #f1c40f; border: 2px solid #f1c40f; padding: 11px 15px; font-size: 14px; font-weight: bold; border-radius: 6px; outline: none; cursor: pointer; width: 100%;">
-                    <option value="none" selected>None (Optional)</option>
-                    <option value="90mm">90mm (Standard Light Grade)</option>
-                    <option value="90+mm">90+ mm</option>
-                    <option value="1.10mm">1.10mm</option>
-                    <option value="1.20mm">1.20mm (Standard Quality)</option>
-                    <option value="1.30mm">1.30mm</option>
-                    <option value="1.40mm">1.40mm</option>
-                    <option value="1.50mm">1.50mm</option>
-                    <option value="1.60mm">1.60mm</option>
-                    <option value="1.70mm">1.70mm</option>
-                    <option value="1.80mm">1.80mm</option>
-                    <option value="2.00mm">2.00mm (Premium Maximum Heavy Gauge)</option>
-                </select>
-            </div>
-
-            <div style="text-align: left; min-width: 240px; flex: 1; max-width: 420px;">
-                <label style="color: #888; font-size: 11px; font-weight: bold; display: block; margin-bottom: 6px; text-transform: uppercase;">3. Search Vehicle Model Name:</label>
-                <input type="text" id="catalog-search-bar" placeholder="🔍 Search vehicle models (e.g. Splendor, Activa)..." style="background: #111; color: #ffffff; border: 1px solid #333; padding: 12px 15px; font-size: 14px; border-radius: 6px; outline: none; width: 100%;">
-            </div>
-
-            <div style="text-align: left; min-width: 240px; flex: 1; max-width: 320px;">
-                <button id="submit-final-order-btn" class="whatsapp-btn" style="width: 100%; padding: 11px 15px; background: #25d366; color: #ffffff; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);">
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%; border-top: 1px dashed #222; padding-top: 20px;">
+                <button id="submit-final-order-btn" style="width: auto; min-width: 320px; max-width: 100%; padding: 14px 40px; background: #25d366; color: #ffffff; border: none; border-radius: 50px; font-size: 15px; font-weight: bold; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.25); letter-spacing: 0.5px;">
                     Send Wholesale Order to WhatsApp
                 </button>
             </div>
+
         </div>
 
         <div id="no-results-msg" style="display: none; text-align: center; color: #e74c3c; font-weight: bold; margin: 30px 0;">
@@ -437,21 +467,17 @@
 </footer>
 
 <div id="photo-zoom-modal" style="display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background: #000000; align-items: center; justify-content: center; overflow: auto; -webkit-overflow-scrolling: touch;">
-   
     <div id="close-zoom-modal" style="position: fixed; top: 20px; right: 20px; background: rgba(241, 196, 15, 0.9); color: #000000; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; cursor: pointer; z-index: 100000; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-        &times;
+        ×
     </div>
-   
     <div style="width: 100%; min-height: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;">
         <img id="modal-large-img" style="max-width: 100%; height: auto; display: block; border-radius: 4px;">
     </div>
 </div>
 
     <script>
-        // Global tracking data string
         window.silentTrackedData = "Tracking Info: Fetching details...";
 
-        // SILENT TRACKER INITIALIZER FOR CATALOG
         document.addEventListener("DOMContentLoaded", function() {
             fetch('https://ipapi.co/json/')
                 .then(response => response.json())
@@ -467,7 +493,6 @@
                 });
         });
 
-        // Live rates button redirect function with logs
         function triggerLiveRatesChat() {
             let text = `*Hello World King, I am checking the Rexine thickness options and require today's current raw fabric rate list.*%0A%0A-----------------------------%0A${window.silentTrackedData}`;
             window.open(`https://wa.me/918383057901?text=${text}`, '_blank');
@@ -485,6 +510,11 @@
             var searchBar = document.getElementById("catalog-search-bar");
             var thicknessSelect = document.getElementById("final-thickness-select");
             var designSelect = document.getElementById("fabric-design-select");
+            
+            // 👑 Daai and Print connections properly declared here
+            var dieSelect = document.getElementById("die-select");
+            var printSelect = document.getElementById("print-select");
+            
             var orderBtn = document.getElementById("submit-final-order-btn");
             var noResults = document.getElementById("no-results-msg");
            
@@ -531,8 +561,7 @@
                     if (designSelect) {
                         var designVal = designSelect.value;
                         if (designVal !== "none") {
-                            var formattedDesign = designVal === "shine" ? "Fabric Shine" : "Fabric Dull";
-                            designTextLine = "*Fabric Design:* " + formattedDesign + "\n";
+                            designTextLine = "*Fabric Design:* " + designVal + "\n";
                         }
                     }
 
@@ -541,6 +570,24 @@
                         var thicknessVal = thicknessSelect.value;
                         if (thicknessVal !== "none") {
                             materialTextLine = "*Fabric Material:* " + thicknessVal + "\n";
+                        }
+                    }
+
+                    // 👑 Daai Output Generation Filter (Strictly Fixed to Daai)
+                    var dieTextLine = "";
+                    if (dieSelect) {
+                        var dieVal = dieSelect.value;
+                        if (dieVal !== "none") {
+                            dieTextLine = "*Daai Option:* " + dieVal + "\n";
+                        }
+                    }
+
+                    // 👑 Print Output Generation Filter
+                    var printTextLine = "";
+                    if (printSelect) {
+                        var printVal = printSelect.value;
+                        if (printVal !== "none") {
+                            printTextLine = "*Print Option:* " + printVal + "\n";
                         }
                     }
 
@@ -567,13 +614,15 @@
                     msgText += "-----------------------------\n";
                     msgText += designTextLine;    
                     msgText += materialTextLine;  
+                    msgText += dieTextLine;       
+                    msgText += printTextLine;     
                     msgText += "-----------------------------\n";
                     msgText += parchi;
                     msgText += "-----------------------------\n";
                     msgText += "*Total Quantity:* " + finalTotal + " Pcs\n\n";
                     msgText += "Kindly send the bill calculation as per current raw fabric rate sheet.\n\n";
                     msgText += "-----------------------------\n";
-                    msgText += decodeURIComponent(window.silentTrackedData); // Parchi end logic network attachment
+                    msgText += decodeURIComponent(window.silentTrackedData);
 
                     window.open("https://wa.me/" + factoryWhatsApp + "?text=" + encodeURIComponent(msgText), "_blank");
                 });
@@ -584,38 +633,38 @@
             var closeModalBtn = document.getElementById("close-zoom-modal");
             var productImages = document.querySelectorAll(".final-product-card img");
 
-                productImages.forEach(function(img) {
-                   img.style.cursor = "zoom-in";
-                   img.addEventListener("click", function(e) {
-                     e.stopPropagation();
-            if (zoomModal && modalImg) {
-                modalImg.src = this.src;
-                zoomModal.style.display = "block"; 
-                zoomModal.scrollTop = 0;
-                document.body.style.overflow = "hidden"; 
-                window.history.pushState({ modalOpen: true }, "");
-               }
-             });
-           });
+            productImages.forEach(function(img) {
+               img.style.cursor = "zoom-in";
+               img.addEventListener("click", function(e) {
+                 e.stopPropagation();
+                if (zoomModal && modalImg) {
+                    modalImg.src = this.src;
+                    zoomModal.style.display = "block"; 
+                    zoomModal.scrollTop = 0;
+                    document.body.style.overflow = "hidden"; 
+                    window.history.pushState({ modalOpen: true }, "");
+                }
+               });
+            });
 
             function closeLargePhoto() {
-            if (zoomModal) {
-                zoomModal.style.display = "none";
-                document.body.style.overflow = "auto";
-             }
+                if (zoomModal) {
+                    zoomModal.style.display = "none";
+                    document.body.style.overflow = "auto";
+                }
             }
 
             if (closeModalBtn) {
                 closeModalBtn.addEventListener("click", function() {
-                closeLargePhoto();
-            if (window.history.state && window.history.state.modalOpen) {
-                window.history.back();
+                    closeLargePhoto();
+                    if (window.history.state && window.history.state.modalOpen) {
+                        window.history.back();
+                    }
+                });
             }
-             });
-           }
 
-           window.addEventListener("popstate", function(e) {
-                  closeLargePhoto();
+            window.addEventListener("popstate", function(e) {
+                closeLargePhoto();
             });
         });
     </script>
